@@ -92,7 +92,7 @@ const formSchema = z.object({
     .number({ required_error: "Price is required." })
     .positive("Price must be a positive number."),
   discountedPrice: z.coerce.number().optional().nullable(),
-  currency: z.string().default("USD"),
+  currency: z.string().default("THB"), // Changed to THB only
   sku: z.string().optional(),
   stockQuantity: z.coerce
     .number({ required_error: "Stock quantity is required." })
@@ -179,7 +179,7 @@ const NewProductPage = () => {
       category: "",
       price: 0,
       discountedPrice: null,
-      currency: "USD",
+      currency: "THB", // Set THB as default
       sku: "",
       stockQuantity: 1,
       condition: "good",
@@ -334,7 +334,6 @@ const NewProductPage = () => {
         </div>
 
         <h1 className="text-4xl font-bold text-amber-900 flex items-center">
-          <Crown className="h-8 w-8 mr-3 text-amber-600" />
           Add New Antique Treasure
         </h1>
         <div className="text-lg text-amber-700 mt-2">
@@ -488,15 +487,15 @@ const NewProductPage = () => {
               Pricing & Inventory
             </h2>
             <p className={sectionDescriptionClassName}>
-              Set pricing and manage stock levels
+              Set pricing and manage stock levels (All prices in Thai Baht)
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <FormField
                 control={control}
                 name="price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-amber-900">Price</FormLabel>
+                    <FormLabel className="text-amber-900">Price (฿ THB)</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -517,7 +516,7 @@ const NewProductPage = () => {
                 name="discountedPrice"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-amber-900">Sale Price (Optional)</FormLabel>
+                    <FormLabel className="text-amber-900">Sale Price (฿ THB - Optional)</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -533,32 +532,6 @@ const NewProductPage = () => {
                         className="border-amber-300 focus:border-amber-500"
                       />
                     </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={control}
-                name="currency"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-amber-900">Currency</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="border-amber-300">
-                          <SelectValue />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="USD">USD ($)</SelectItem>
-                        <SelectItem value="EUR">EUR (€)</SelectItem>
-                        <SelectItem value="GBP">GBP (£)</SelectItem>
-                        <SelectItem value="JPY">JPY (¥)</SelectItem>
-                        <SelectItem value="CAD">CAD ($)</SelectItem>
-                        <SelectItem value="AUD">AUD ($)</SelectItem>
-                      </SelectContent>
-                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -1038,29 +1011,39 @@ const NewProductPage = () => {
                     Upload high-quality photos showcasing this antique piece. JPG, PNG, WEBP accepted. Max 5MB each.
                   </FormDescription>
                   <FormControl>
-                    <FilePond
-                      files={field.value as File[]}
-                      onupdatefiles={(fileItems) =>
-                        field.onChange(
-                          fileItems.map((item) => item.file as File)
-                        )
-                      }
-                      allowMultiple={true}
-                      maxFiles={10}
-                      name="photos"
-                      labelIdle={`Drag & Drop your photos or <span class="filepond--label-action">Browse</span>`}
-                      allowImagePreview={true}
-                      imagePreviewHeight={160}
-                      acceptedFileTypes={[
-                        "image/png",
-                        "image/jpeg",
-                        "image/webp",
-                      ]}
-                      allowFileSizeValidation={true}
-                      maxFileSize="5MB"
-                      credits={false}
-                      stylePanelAspectRatio="1:1"
-                    />
+                    <div className="filepond-container">
+                      <FilePond
+                        files={field.value as File[]}
+                        onupdatefiles={(fileItems) =>
+                          field.onChange(
+                            fileItems.map((item) => item.file as File)
+                          )
+                        }
+                        allowMultiple={true}
+                        maxFiles={10}
+                        name="photos"
+                        labelIdle={`Drag & Drop your photos or <span class="filepond--label-action">Browse</span>`}
+                        allowImagePreview={true}
+                        imagePreviewHeight={160}
+                        imagePreviewMaxHeight={160}
+                        allowImageResize={true}
+                        imageResizeTargetWidth={200}
+                        imageResizeTargetHeight={200}
+                        acceptedFileTypes={[
+                          "image/png",
+                          "image/jpeg",
+                          "image/webp",
+                        ]}
+                        allowFileSizeValidation={true}
+                        maxFileSize="5MB"
+                        credits={false}
+                        stylePanelLayout="grid"
+                        styleItemPanelAspectRatio="1:1"
+                        allowReorder={true}
+                        dropOnPage={true}
+                        dropOnElement={false}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -1140,7 +1123,6 @@ const NewProductPage = () => {
                 </>
               ) : (
                 <>
-                  <Crown className="h-5 w-5 mr-2" />
                   Add to Antique Collection
                 </>
               )}
@@ -1148,6 +1130,75 @@ const NewProductPage = () => {
           </div>
         </form>
       </Form>
+
+      <style jsx global>{`
+        .filepond-container {
+          position: relative;
+          z-index: 1;
+        }
+        
+        .filepond--root {
+          font-family: inherit;
+        }
+        
+        .filepond--item {
+          width: calc(50% - 0.5em);
+          margin: 0.25em;
+        }
+        
+        @media (min-width: 768px) {
+          .filepond--item {
+            width: calc(33.333% - 0.5em);
+          }
+        }
+        
+        @media (min-width: 1024px) {
+          .filepond--item {
+            width: calc(25% - 0.5em);
+          }
+        }
+        
+        .filepond--item-panel {
+          background-color: rgba(251, 191, 36, 0.1);
+          border: 2px dashed #d97706;
+          border-radius: 0.5rem;
+        }
+        
+        .filepond--image-preview {
+          border-radius: 0.375rem;
+        }
+        
+        .filepond--image-preview-wrapper {
+          border-radius: 0.375rem;
+        }
+        
+        .filepond--drop-label {
+          color: #92400e;
+        }
+        
+        .filepond--label-action {
+          color: #d97706;
+        }
+        
+        .filepond--panel-root {
+          border-radius: 0.5rem;
+          background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .filepond--file-action-button {
+          border-radius: 50%;
+          background-color: rgba(220, 38, 38, 0.9);
+          color: white;
+        }
+        
+        .filepond--file-action-button:hover {
+          background-color: rgba(220, 38, 38, 1);
+        }
+        
+        .filepond--progress-indicator {
+          color: #d97706;
+        }
+      `}</style>
     </div>
   );
 };

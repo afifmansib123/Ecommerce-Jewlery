@@ -507,10 +507,10 @@ const AdminProducts: React.FC = () => {
                         </TableCell>
                         <TableCell>
                           <div className="font-semibold text-amber-900">
-                            ${product.price.toLocaleString()}
+                            {product.price.toLocaleString()}THB
                             {product.discountedPrice && (
-                              <div className="text-xs text-amber-600 line-through">
-                                ${product.discountedPrice.toLocaleString()}
+                              <div className="text-xs text-amber-600">
+                                {product.discountedPrice.toLocaleString()} THB
                               </div>
                             )}
                           </div>

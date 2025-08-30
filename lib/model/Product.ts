@@ -81,18 +81,13 @@ const productSchema = new Schema<IProduct>(
     discountedPrice: {
       type: Number,
       min: [0, "Discounted price cannot be negative"],
-      validate: {
-        validator: function(this: IProduct, value: number) {
-          return !value || value < this.price;
-        },
-        message: "Discounted price must be less than regular price"
-      }
+      // Removed problematic validator - validation moved to API route
     },
     currency: {
       type: String,
       required: true,
       default: "USD",
-      enum: ["JPY", "USD", "EUR", "GBP", "INR", "AUD", "CAD"],
+      enum: ["JPY", "USD", "EUR", "GBP", "INR", "AUD", "CAD", "THB"],
     },
     sku: {
       type: String,
@@ -100,6 +95,7 @@ const productSchema = new Schema<IProduct>(
       unique: true,
       trim: true,
       uppercase: true,
+      // Removed index: true - using schema.index() instead
     },
     images: [
       {
@@ -223,6 +219,7 @@ const productSchema = new Schema<IProduct>(
       unique: true,
       lowercase: true,
       trim: true,
+      // Removed index: true - using schema.index() instead
     },
   },
   {
@@ -253,10 +250,10 @@ productSchema.pre("save", function (next) {
   next();
 });
 
-// Indexes for better performance
+// Indexes for better performance (removed duplicates)
 productSchema.index({ category: 1, isActive: 1 });
-productSchema.index({ slug: 1 });
-productSchema.index({ sku: 1 });
+productSchema.index({ slug: 1 }, { unique: true });
+productSchema.index({ sku: 1 }, { unique: true });
 productSchema.index({ isFeatured: 1, isActive: 1 });
 productSchema.index({ price: 1 });
 productSchema.index({ tags: 1 });
