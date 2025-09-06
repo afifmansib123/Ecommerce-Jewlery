@@ -9,6 +9,11 @@ import {
   Users,
   Star,
   Sparkles,
+  Dot,
+  Clock,
+  Shield, // Add this
+  Gem, // Add this
+  Award, // Add this
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -49,7 +54,8 @@ export default function HomePage() {
       rating: 4.9,
       image:
         "https://images.pexels.com/photos/1454171/pexels-photo-1454171.jpeg?auto=compress&cs=tinysrgb&w=400",
-      description: "Exquisite graduated diamond rivière with impeccable provenance",
+      description:
+        "Exquisite graduated diamond rivière with impeccable provenance",
     },
     {
       id: 2,
@@ -71,7 +77,8 @@ export default function HomePage() {
       rating: 4.7,
       image:
         "https://images.pexels.com/photos/1446948/pexels-photo-1446948.jpeg?auto=compress&cs=tinysrgb&w=400",
-      description: "Delicate filigree work featuring natural pearls and amethysts",
+      description:
+        "Delicate filigree work featuring natural pearls and amethysts",
     },
   ];
 
@@ -223,20 +230,26 @@ export default function HomePage() {
                     {carouselImages[currentSlide].description}
                   </p>
 
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Button
-                      asChild
-                      size="lg"
-                      className="bg-white text-stone-900 hover:bg-stone-50 px-8 py-6 text-lg font-semibold shadow-2xl transition-all duration-300"
-                    >
-                      <Link
-                        href="/tours"
-                        className="inline-flex items-center gap-2"
-                      >
-                        <Sparkles className="h-5 w-5" />
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button className="group relative inline-flex items-center justify-center px-10 py-4 overflow-hidden bg-white text-stone-900 font-medium tracking-wide transition-all duration-500 hover:bg-stone-50 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2 shadow-2xl">
+                      <span className="absolute inset-0 bg-gradient-to-r from-stone-100 to-white opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+                      <span className="relative flex items-center gap-3">
+                        <svg
+                          className="w-5 h-5 transition-transform group-hover:translate-x-1"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="1.5"
+                            d="M13 7l5 5m0 0l-5 5m5-5H6"
+                          ></path>
+                        </svg>
                         {t("home.hero.explore")}
-                      </Link>
-                    </Button>
+                      </span>
+                    </button>
                   </div>
                 </motion.div>
               </div>
@@ -244,22 +257,19 @@ export default function HomePage() {
           </motion.div>
         </AnimatePresence>
 
-        <motion.button
+        <button
           onClick={prevSlide}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 glass-effect hover:bg-white/20 text-white p-3 rounded-full group"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          className="absolute left-6 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-white transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white/50"
         >
-          <ChevronLeft className="h-6 w-6" />
-        </motion.button>
-        <motion.button
+          <ChevronLeft className="h-6 w-6 mx-auto" />
+        </button>
+
+        <button
           onClick={nextSlide}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 glass-effect hover:bg-white/20 text-white p-3 rounded-full group"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          className="absolute right-6 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-white transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white/50"
         >
-          <ChevronRight className="h-6 w-6" />
-        </motion.button>
+          <ChevronRight className="h-6 w-6 mx-auto" />
+        </button>
 
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
           {carouselImages.map((_, index) => (
@@ -279,49 +289,50 @@ export default function HomePage() {
       </section>
 
       {/* Heritage Stats */}
+      {/* Heritage Stats - Updated to match About page styling */}
       <motion.section
-        className="py-16 bg-stone-900 text-white relative overflow-hidden"
+        className="py-16 bg-stone-100"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
       >
-        <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/1454171/pexels-photo-1454171.jpeg')] bg-cover bg-center opacity-10"></div>
-
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
+        <div className="max-w-7xl mx-auto px-4">
           <motion.div
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
+            className="grid md:grid-cols-4 gap-8 text-center"
             variants={containerVariants}
           >
             {[
-              { number: "16+", label: t("home.stats.years"), icon: "📅" },
-              { number: "500+", label: t("home.stats.pieces"), icon: "💎" },
+              { icon: Clock, label: t("home.stats.years"), value: "16+" },
+              { icon: Gem, label: t("home.stats.pieces"), value: "500+" },
               {
-                number: "350+",
+                icon: Shield,
                 label: t("home.stats.collectors"),
-                icon: "👥",
+                value: "350+",
               },
               {
-                number: "99%",
+                icon: Award,
                 label: t("home.stats.satisfaction"),
-                icon: "⭐",
+                value: "100%",
               },
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className="group"
-                whileHover={{ scale: 1.02 }}
-              >
-                <div className="text-4xl mb-2">
-                  {stat.icon}
-                </div>
-                <div className="text-4xl md:text-5xl font-bold text-stone-200 mb-2">
-                  {stat.number}
-                </div>
-                <p className="text-stone-100 font-light">{stat.label}</p>
-              </motion.div>
-            ))}
+            ].map((stat, index) => {
+              const IconComponent = stat.icon;
+              return (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  className="group"
+                >
+                  <div className="w-16 h-16 bg-stone-900 rounded-sm mx-auto mb-4 flex items-center justify-center group-hover:bg-stone-800 transition-colors duration-200">
+                    <IconComponent className="h-8 w-8 text-white" />
+                  </div>
+                  <div className="text-3xl font-light text-stone-900 mb-2">
+                    {stat.value}
+                  </div>
+                  <div className="text-stone-600 font-medium">{stat.label}</div>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       </motion.section>
@@ -390,44 +401,57 @@ export default function HomePage() {
                       ${tour.price}
                     </div>
                   </div>
-                  <CardContent className="p-6 bg-gradient-to-b from-white to-stone-50/30">
-                    <h3 className="text-xl font-semibold mb-2 text-stone-900 group-hover:text-stone-700 transition-colors">
-                      {tour.name}
-                    </h3>
-                    <div className="flex items-center text-stone-700 mb-2">
-                      <MapPin className="h-4 w-4 mr-1 text-stone-500" />
-                      <span className="text-sm font-medium">
-                        {tour.location}
-                      </span>
+                  <div className="group relative bg-white border border-stone-200/60 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-stone-300/20 hover:border-stone-300/80">
+                    <div className="absolute inset-0 bg-gradient-to-br from-stone-50/30 to-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <div className="relative">
+                        <CardContent className="p-6 bg-gradient-to-b from-white to-stone-50/30">
+                          <h3 className="text-xl font-semibold mb-2 text-stone-900 group-hover:text-stone-700 transition-colors">
+                            {tour.name}
+                          </h3>
+                          <div className="flex items-center text-stone-700 mb-2">
+                            <MapPin className="h-4 w-4 mr-1 text-stone-500" />
+                            <span className="text-sm font-medium">
+                              {tour.location}
+                            </span>
+                          </div>
+                          <div className="flex items-center text-stone-700 mb-2">
+                            <Calendar className="h-4 w-4 mr-1 text-stone-500" />
+                            <span className="text-sm font-medium">
+                              {tour.duration}
+                            </span>
+                          </div>
+                          <div className="flex items-center mb-3">
+                            <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                            <span className="text-sm text-stone-600 ml-1">
+                              {tour.rating}
+                            </span>
+                          </div>
+                          <p className="text-stone-600 text-sm mb-4 leading-relaxed">
+                            {tour.description}
+                          </p>
+                          <button className="group w-full relative overflow-hidden bg-stone-800 text-white py-3 px-6 font-medium tracking-wide transition-all duration-400 hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2">
+                            <span className="absolute inset-0 bg-gradient-to-r from-stone-700 to-stone-600 translate-x-[-100%] transition-transform duration-400 group-hover:translate-x-0"></span>
+                            <span className="relative flex items-center justify-center gap-2">
+                              {t("tours.viewDetails")}
+                              <svg
+                                className="w-4 h-4 transition-transform group-hover:translate-x-1"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M9 5l7 7-7 7"
+                                ></path>
+                              </svg>
+                            </span>
+                          </button>
+                        </CardContent>
+                      </div>
                     </div>
-                    <div className="flex items-center text-stone-700 mb-2">
-                      <Calendar className="h-4 w-4 mr-1 text-stone-500" />
-                      <span className="text-sm font-medium">
-                        {tour.duration}
-                      </span>
-                    </div>
-                    <div className="flex items-center mb-3">
-                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                      <span className="text-sm text-stone-600 ml-1">
-                        {tour.rating}
-                      </span>
-                    </div>
-                    <p className="text-stone-600 text-sm mb-4 leading-relaxed">
-                      {tour.description}
-                    </p>
-                    <Button
-                      asChild
-                      className="w-full bg-gradient-to-r from-stone-700 to-stone-800 hover:from-stone-800 hover:to-stone-900 text-white shadow-lg hover:shadow-xl transition-all duration-200"
-                    >
-                      <Link
-                        href={`/tours/${tour.id}`}
-                        className="inline-flex items-center justify-center gap-2"
-                      >
-                        {t("tours.viewDetails")}
-                        <ChevronRight className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </CardContent>
+                  </div>
                 </Card>
               </motion.div>
             ))}
@@ -515,22 +539,28 @@ export default function HomePage() {
                 whileHover={{ scale: 1.02 }}
                 className="group cursor-pointer"
               >
-                <div className="relative h-48 rounded-2xl overflow-hidden mb-4 shadow-lg">
-                  <img
-                    src={category.image}
-                    alt={category.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4 text-white">
-                    <div className="text-3xl mb-2">{category.icon}</div>
-                    <h3 className="font-semibold text-lg">{category.title}</h3>
-                    <p className="text-sm text-stone-200">{category.count}</p>
+                <div className="group cursor-pointer">
+                  <div className="relative h-48 overflow-hidden mb-4 border border-stone-200/40 transition-all duration-500 group-hover:border-stone-300/60">
+                    <img
+                      src={category.image}
+                      alt={category.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-stone-900/90 via-stone-900/40 to-transparent"></div>
+                    <div className="absolute bottom-6 left-6 text-white">
+                      <div className="w-1 h-8 bg-white/60 mb-3"></div>
+                      <h3 className="font-medium text-lg tracking-wide mb-1">
+                        {category.title}
+                      </h3>
+                      <p className="text-sm text-stone-200 font-light">
+                        {category.count}
+                      </p>
+                    </div>
                   </div>
+                  <p className="text-center text-stone-700 text-sm font-light leading-relaxed px-2">
+                    {category.description}
+                  </p>
                 </div>
-                <p className="text-center text-stone-700 text-sm font-light">
-                  {category.description}
-                </p>
               </motion.div>
             ))}
           </motion.div>
@@ -735,7 +765,10 @@ export default function HomePage() {
 
                 <div className="flex mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+                    <Star
+                      key={i}
+                      className="h-5 w-5 text-yellow-400 fill-current"
+                    />
                   ))}
                 </div>
 
@@ -785,27 +818,43 @@ export default function HomePage() {
             {t("home.cta.subtitle")}
           </p>
           <div className="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
-            <Button
-              asChild
-              size="lg"
-              className="bg-white text-stone-900 hover:bg-stone-50 px-8 py-6 text-lg font-semibold shadow-2xl"
-            >
-              <Link href="/tours" className="inline-flex items-center gap-2">
-                <Sparkles className="h-5 w-5" />
+            <button className="group relative inline-flex items-center justify-center px-10 py-4 overflow-hidden bg-white text-stone-900 font-medium tracking-wide transition-all duration-400 hover:bg-stone-50 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2 shadow-2xl">
+              <span className="absolute inset-0 bg-gradient-to-r from-stone-50 to-white opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
+              <span className="relative flex items-center gap-3">
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1.5"
+                    d="M5 3l14 9-14 9V3z"
+                  ></path>
+                </svg>
                 {t("home.cta.browse")}
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="border-2 border-white text-white hover:bg-white hover:text-stone-900 px-8 py-6 text-lg font-semibold backdrop-blur-sm bg-white/10"
-            >
-              <Link href="/about" className="inline-flex items-center gap-2">
-                <Users className="h-5 w-5" />
+              </span>
+            </button>
+            <button className="group relative inline-flex items-center justify-center px-10 py-4 border border-white/30 bg-white/5 backdrop-blur-sm text-white font-medium tracking-wide transition-all duration-400 hover:bg-white hover:text-stone-900 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2">
+              <span className="relative flex items-center gap-3">
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1.5"
+                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"
+                  ></path>
+                </svg>
                 {t("home.cta.learn")}
-              </Link>
-            </Button>
+              </span>
+            </button>
           </div>
         </div>
       </motion.section>
@@ -813,14 +862,13 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/1454171/pexels-photo-1454171.jpeg')] bg-cover bg-center opacity-5"></div>
-        
+
         <div className="relative z-10">
           {/* Main Footer Content */}
           <div className="max-w-7xl mx-auto px-4 py-16">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              
               {/* Company Info */}
-              <motion.div 
+              <motion.div
                 className="lg:col-span-1"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -829,39 +877,47 @@ export default function HomePage() {
               >
                 <div className="mb-6">
                   <h3 className="text-2xl font-serif italic text-stone-200 mb-2">
-                    {t('footer.title')}
+                    {t("footer.title")}
                   </h3>
                   <p className="text-stone-300 text-sm font-light tracking-wide">
-                    {t('footer.subtitle')}
+                    {t("footer.subtitle")}
                   </p>
                 </div>
                 <p className="text-stone-100 mb-6 leading-relaxed font-light text-sm">
-                  {t('footer.description')}
+                  {t("footer.description")}
                 </p>
-                
+
                 {/* Social Media */}
                 <div className="mb-6">
                   <h4 className="text-stone-200 font-semibold mb-4 text-sm uppercase tracking-wide">
-                    {t('footer.followUs')}
+                    {t("footer.followUs")}
                   </h4>
                   <div className="flex space-x-4">
-                    <a 
-                      href="https://instagram.com/wangmaneegallery" 
+                    <a
+                      href="https://instagram.com/wangmaneegallery"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-10 h-10 bg-gradient-to-br from-pink-500 to-orange-500 rounded-lg flex items-center justify-center hover:scale-105 transition-all duration-300 shadow-lg"
                     >
-                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                      <svg
+                        className="w-5 h-5 text-white"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                       </svg>
                     </a>
-                    
-                    <a 
-                      href="#" 
+
+                    <a
+                      href="#"
                       className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-500 rounded-lg flex items-center justify-center hover:scale-105 transition-all duration-300 shadow-lg"
                     >
-                      <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                      <svg
+                        className="w-5 h-5 text-white"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                       </svg>
                     </a>
                   </div>
@@ -876,19 +932,19 @@ export default function HomePage() {
                 transition={{ duration: 0.6, delay: 0.1 }}
               >
                 <h4 className="text-stone-200 font-semibold mb-6 text-sm uppercase tracking-wide">
-                  {t('footer.quickLinks')}
+                  {t("footer.quickLinks")}
                 </h4>
                 <ul className="space-y-3">
                   {[
-                    { key: 'home', href: '/' },
-                    { key: 'collection', href: '/products' }, 
-                    { key: 'about', href: '/about' },
-                    { key: 'contact', href: '/contact' },
-                    { key: 'authentication', href: '/authentication' },
-                    { key: 'shipping', href: '/shipping' }
+                    { key: "home", href: "/" },
+                    { key: "collection", href: "/products" },
+                    { key: "about", href: "/about" },
+                    { key: "contact", href: "/contact" },
+                    { key: "authentication", href: "/authentication" },
+                    { key: "shipping", href: "/shipping" },
                   ].map((link, index) => (
                     <li key={link.key}>
-                      <Link 
+                      <Link
                         href={link.href}
                         className="text-stone-100 hover:text-stone-300 transition-colors font-light text-sm"
                       >
@@ -907,19 +963,19 @@ export default function HomePage() {
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
                 <h4 className="text-stone-200 font-semibold mb-6 text-sm uppercase tracking-wide">
-                  {t('footer.categories')}
+                  {t("footer.categories")}
                 </h4>
                 <ul className="space-y-3">
                   {[
-                    { key: 'rings', href: '/tours?category=rings' },
-                    { key: 'necklaces', href: '/tours?category=necklaces' },
-                    { key: 'bracelets', href: '/tours?category=bracelets' },
-                    { key: 'earrings', href: '/tours?category=earrings' },
-                    { key: 'brooches', href: '/tours?category=brooches' },
-                    { key: 'watches', href: '/tours?category=watches' }
+                    { key: "rings", href: "/tours?category=rings" },
+                    { key: "necklaces", href: "/tours?category=necklaces" },
+                    { key: "bracelets", href: "/tours?category=bracelets" },
+                    { key: "earrings", href: "/tours?category=earrings" },
+                    { key: "brooches", href: "/tours?category=brooches" },
+                    { key: "watches", href: "/tours?category=watches" },
                   ].map((category, index) => (
                     <li key={category.key}>
-                      <Link 
+                      <Link
                         href={category.href}
                         className="text-stone-100 hover:text-stone-300 transition-colors font-light text-sm"
                       >
@@ -938,43 +994,43 @@ export default function HomePage() {
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
                 <h4 className="text-stone-200 font-semibold mb-6 text-sm uppercase tracking-wide">
-                  {t('footer.contact')}
+                  {t("footer.contact")}
                 </h4>
                 <div className="space-y-4">
                   <div className="flex items-start">
                     <MapPin className="h-4 w-4 text-stone-400 mr-3 mt-0.5" />
                     <div>
                       <p className="text-stone-100 text-sm font-light leading-relaxed">
-                        {t('footer.contact.address')}
+                        {t("footer.contact.address")}
                       </p>
                       <p className="text-stone-100 text-sm font-light">
-                        {t('footer.contact.city')}
+                        {t("footer.contact.city")}
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center">
                     <div className="h-4 w-4 text-stone-400 mr-3 flex items-center justify-center">
                       📞
                     </div>
                     <p className="text-stone-100 text-sm font-light">
-                      {t('footer.contact.phone')}
+                      {t("footer.contact.phone")}
                     </p>
                   </div>
-                  
+
                   <div className="flex items-center">
                     <div className="h-4 w-4 text-stone-400 mr-3 flex items-center justify-center">
                       ✉️
                     </div>
                     <p className="text-stone-100 text-sm font-light">
-                      {t('footer.contact.email')}
+                      {t("footer.contact.email")}
                     </p>
                   </div>
-                  
+
                   <div className="flex items-center">
                     <Calendar className="h-4 w-4 text-stone-400 mr-3" />
                     <p className="text-stone-100 text-sm font-light">
-                      {t('footer.contact.hours')}
+                      {t("footer.contact.hours")}
                     </p>
                   </div>
                 </div>
@@ -987,22 +1043,22 @@ export default function HomePage() {
             <div className="max-w-7xl mx-auto px-4 py-6">
               <div className="flex flex-col md:flex-row justify-between items-center">
                 <p className="text-stone-200 text-sm font-light mb-4 md:mb-0">
-                  {t('footer.copyright')}
+                  {t("footer.copyright")}
                 </p>
-                
+
                 <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6">
                   <p className="text-stone-300 text-xs font-light italic">
-                    {t('footer.crafted')}
+                    {t("footer.crafted")}
                   </p>
-                  
+
                   <div className="flex space-x-4 text-xs">
                     {[
-                      { key: 'privacy', href: '/privacy' },
-                      { key: 'terms', href: '/terms' },
-                      { key: 'returns', href: '/returns' },
-                      { key: 'authenticity', href: '/authenticity' }
+                      { key: "privacy", href: "/privacy" },
+                      { key: "terms", href: "/terms" },
+                      { key: "returns", href: "/returns" },
+                      { key: "authenticity", href: "/authenticity" },
                     ].map((legal, index) => (
-                      <Link 
+                      <Link
                         key={legal.key}
                         href={legal.href}
                         className="text-stone-300 hover:text-stone-100 transition-colors"

@@ -31,7 +31,7 @@ export default function Navbar() {
   // Regular navigation for public/user pages
   const publicNavigation = [
     { name: t('nav.home'), href: '/' },
-    { name: t('nav.tours'), href: '/tours' },
+    { name: t('nav.tours'), href: '/products' },
     { name: t('nav.about'), href: '/about' },
   ];
 

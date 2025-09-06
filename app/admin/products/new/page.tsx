@@ -48,17 +48,37 @@ registerPlugin(
 
 // --- ANTIQUE JEWELRY SPECIFIC OPTIONS ---
 const CONDITION_OPTIONS = [
-  { value: "excellent", label: "Excellent", description: "Museum quality, pristine condition" },
-  { value: "very-good", label: "Very Good", description: "Minor signs of age, well preserved" },
-  { value: "good", label: "Good", description: "Good condition with age-appropriate wear" },
-  { value: "fair", label: "Fair", description: "Shows wear but structurally sound" },
-  { value: "poor", label: "Poor", description: "Significant wear, may need restoration" }
+  {
+    value: "excellent",
+    label: "Excellent",
+    description: "Museum quality, pristine condition",
+  },
+  {
+    value: "very-good",
+    label: "Very Good",
+    description: "Minor signs of age, well preserved",
+  },
+  {
+    value: "good",
+    label: "Good",
+    description: "Good condition with age-appropriate wear",
+  },
+  {
+    value: "fair",
+    label: "Fair",
+    description: "Shows wear but structurally sound",
+  },
+  {
+    value: "poor",
+    label: "Poor",
+    description: "Significant wear, may need restoration",
+  },
 ];
 
 const DIMENSION_UNITS = [
   { value: "mm", label: "Millimeters (mm)" },
   { value: "cm", label: "Centimeters (cm)" },
-  { value: "inches", label: "Inches" }
+  { value: "inches", label: "Inches" },
 ];
 
 interface Category {
@@ -102,12 +122,14 @@ const formSchema = z.object({
   period: z.string().optional(),
   origin: z.string().optional(),
   weight: z.coerce.number().optional(),
-  dimensions: z.object({
-    length: z.coerce.number().optional(),
-    width: z.coerce.number().optional(),
-    height: z.coerce.number().optional(),
-    unit: z.enum(["mm", "cm", "inches"]).default("mm"),
-  }).optional(),
+  dimensions: z
+    .object({
+      length: z.coerce.number().optional(),
+      width: z.coerce.number().optional(),
+      height: z.coerce.number().optional(),
+      unit: z.enum(["mm", "cm", "inches"]).default("mm"),
+    })
+    .optional(),
   gemstones: z.array(gemstoneschema).optional(),
   authenticity: z.object({
     certified: z.boolean().default(false),
@@ -234,12 +256,18 @@ const NewProductPage = () => {
   // Helper functions for dynamic arrays
   const addGemstone = () => {
     const currentGemstones = watchedGemstones || [];
-    setValue("gemstones", [...currentGemstones, { type: "", carat: undefined, cut: "", color: "", clarity: "" }]);
+    setValue("gemstones", [
+      ...currentGemstones,
+      { type: "", carat: undefined, cut: "", color: "", clarity: "" },
+    ]);
   };
 
   const removeGemstone = (index: number) => {
     const currentGemstones = watchedGemstones || [];
-    setValue("gemstones", currentGemstones.filter((_, i) => i !== index));
+    setValue(
+      "gemstones",
+      currentGemstones.filter((_, i) => i !== index)
+    );
   };
 
   const addTag = () => {
@@ -250,7 +278,10 @@ const NewProductPage = () => {
   };
 
   const removeTag = (tagToRemove: string) => {
-    setValue("tags", watchedTags.filter(tag => tag !== tagToRemove));
+    setValue(
+      "tags",
+      watchedTags.filter((tag) => tag !== tagToRemove)
+    );
   };
 
   const onInvalid = (errors: any) => {
@@ -284,7 +315,7 @@ const NewProductPage = () => {
       if (K === "photos") return;
 
       // Handle complex objects and arrays
-      if (Array.isArray(value) || typeof value === 'object') {
+      if (Array.isArray(value) || typeof value === "object") {
         formDataToSubmit.append(K, JSON.stringify(value || []));
       } else if (value !== undefined && value !== null && value !== "") {
         formDataToSubmit.append(K, String(value));
@@ -317,15 +348,21 @@ const NewProductPage = () => {
     setIsSubmitting(false);
   };
 
-  const sectionCardClassName = "bg-gradient-to-br from-amber-50 to-orange-50 shadow-lg rounded-xl p-6 border border-amber-200";
-  const sectionTitleClassName = "text-xl font-bold text-amber-900 mb-1 flex items-center";
-  const sectionDescriptionClassName = "text-sm text-amber-700 mb-6";
+  const sectionCardClassName =
+    "bg-gradient-to-br from-white to-stone-50 shadow-lg rounded-xl p-6 border border-stone-200";
+  const sectionTitleClassName =
+    "text-xl font-bold text-stone-900 mb-1 flex items-center";
+  const sectionDescriptionClassName = "text-sm text-stone-700 mb-6";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-stone-50 via-stone-50/30 to-white py-8 px-4 sm:px-6 lg:px-8">
       <header className="mb-8">
         <div className="flex items-center space-x-4 mb-4">
-          <Button asChild variant="outline" className="border-amber-300 text-amber-700 hover:bg-amber-100">
+          <Button
+            asChild
+            variant="outline"
+            className="border-amber-300 text-amber-700 hover:bg-amber-100"
+          >
             <Link href="/admin/products">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Collection
@@ -333,10 +370,10 @@ const NewProductPage = () => {
           </Button>
         </div>
 
-        <h1 className="text-4xl font-bold text-amber-900 flex items-center">
+        <h1 className="text-4xl font-bold text-stone-900 flex items-center">
           Add New Antique Treasure
         </h1>
-        <div className="text-lg text-amber-700 mt-2">
+        <div className="text-lg text-stone-700 mt-2">
           <p>Catalog a precious piece for your antique jewelry collection</p>
         </div>
       </header>
@@ -392,7 +429,9 @@ const NewProductPage = () => {
                   name="sku"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-amber-900">SKU (Optional)</FormLabel>
+                      <FormLabel className="text-amber-900">
+                        SKU (Optional)
+                      </FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Auto-generated if empty"
@@ -446,7 +485,9 @@ const NewProductPage = () => {
                 name="shortDescription"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-amber-900">Short Description (Optional)</FormLabel>
+                    <FormLabel className="text-amber-900">
+                      Short Description (Optional)
+                    </FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Brief description for listings..."
@@ -464,7 +505,9 @@ const NewProductPage = () => {
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-amber-900">Full Description</FormLabel>
+                    <FormLabel className="text-amber-900">
+                      Full Description
+                    </FormLabel>
                     <FormControl>
                       <Textarea
                         placeholder="Detailed description including history, craftsmanship, and unique features..."
@@ -495,7 +538,9 @@ const NewProductPage = () => {
                 name="price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-amber-900">Price (฿ THB)</FormLabel>
+                    <FormLabel className="text-amber-900">
+                      Price (฿ THB)
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -516,7 +561,9 @@ const NewProductPage = () => {
                 name="discountedPrice"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-amber-900">Sale Price (฿ THB - Optional)</FormLabel>
+                    <FormLabel className="text-amber-900">
+                      Sale Price (฿ THB - Optional)
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -542,7 +589,9 @@ const NewProductPage = () => {
                 name="stockQuantity"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-amber-900">Stock Quantity</FormLabel>
+                    <FormLabel className="text-amber-900">
+                      Stock Quantity
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -582,10 +631,17 @@ const NewProductPage = () => {
                       </FormControl>
                       <SelectContent>
                         {CONDITION_OPTIONS.map((condition) => (
-                          <SelectItem key={condition.value} value={condition.value}>
+                          <SelectItem
+                            key={condition.value}
+                            value={condition.value}
+                          >
                             <div>
-                              <div className="font-medium">{condition.label}</div>
-                              <div className="text-xs text-gray-600">{condition.description}</div>
+                              <div className="font-medium">
+                                {condition.label}
+                              </div>
+                              <div className="text-xs text-gray-600">
+                                {condition.description}
+                              </div>
                             </div>
                           </SelectItem>
                         ))}
@@ -619,7 +675,9 @@ const NewProductPage = () => {
                 name="period"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-amber-900">Historical Period</FormLabel>
+                    <FormLabel className="text-amber-900">
+                      Historical Period
+                    </FormLabel>
                     <FormControl>
                       <Input
                         placeholder="e.g., Victorian, Art Deco"
@@ -655,7 +713,9 @@ const NewProductPage = () => {
                 name="weight"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-amber-900">Weight (grams)</FormLabel>
+                    <FormLabel className="text-amber-900">
+                      Weight (grams)
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -674,7 +734,9 @@ const NewProductPage = () => {
 
             {/* Dimensions */}
             <div className="mt-6">
-              <h3 className="text-lg font-semibold text-amber-900 mb-4">Dimensions (Optional)</h3>
+              <h3 className="text-lg font-semibold text-amber-900 mb-4">
+                Dimensions (Optional)
+              </h3>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <FormField
                   control={control}
@@ -742,7 +804,10 @@ const NewProductPage = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-amber-900">Unit</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
                         <FormControl>
                           <SelectTrigger className="border-amber-300">
                             <SelectValue />
@@ -775,7 +840,10 @@ const NewProductPage = () => {
             </p>
             <div className="space-y-4">
               {watchedGemstones.map((gemstone, index) => (
-                <div key={index} className="grid grid-cols-1 md:grid-cols-5 gap-4 p-4 border border-amber-200 rounded-lg bg-white/50">
+                <div
+                  key={index}
+                  className="grid grid-cols-1 md:grid-cols-5 gap-4 p-4 border border-amber-200 rounded-lg bg-white/50"
+                >
                   <FormField
                     control={control}
                     name={`gemstones.${index}.type`}
@@ -863,7 +931,7 @@ const NewProductPage = () => {
                   </div>
                 </div>
               ))}
-              
+
               <Button
                 type="button"
                 variant="outline"
@@ -911,7 +979,9 @@ const NewProductPage = () => {
                     name="authenticity.certificateNumber"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-amber-900">Certificate Number</FormLabel>
+                        <FormLabel className="text-amber-900">
+                          Certificate Number
+                        </FormLabel>
                         <FormControl>
                           <Input
                             placeholder="e.g., GIA-123456"
@@ -929,7 +999,9 @@ const NewProductPage = () => {
                     name="authenticity.certifyingBody"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-amber-900">Certifying Organization</FormLabel>
+                        <FormLabel className="text-amber-900">
+                          Certifying Organization
+                        </FormLabel>
                         <FormControl>
                           <Input
                             placeholder="e.g., GIA, AGS"
@@ -961,7 +1033,9 @@ const NewProductPage = () => {
                   placeholder="Add a tag..."
                   value={tagInput}
                   onChange={(e) => setTagInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
+                  onKeyPress={(e) =>
+                    e.key === "Enter" && (e.preventDefault(), addTag())
+                  }
                   className="border-amber-300 focus:border-amber-500"
                 />
                 <Button
@@ -973,11 +1047,14 @@ const NewProductPage = () => {
                   <Plus className="h-4 w-4" />
                 </Button>
               </div>
-              
+
               {watchedTags.length > 0 && (
                 <div className="flex flex-wrap gap-2">
                   {watchedTags.map((tag, index) => (
-                    <div key={index} className="flex items-center gap-1 bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm">
+                    <div
+                      key={index}
+                      className="flex items-center gap-1 bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm"
+                    >
                       <span>{tag}</span>
                       <Button
                         type="button"
@@ -1006,9 +1083,12 @@ const NewProductPage = () => {
               name="photos"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-amber-900">Product Photos (Required)</FormLabel>
+                  <FormLabel className="text-amber-900">
+                    Product Photos (Required)
+                  </FormLabel>
                   <FormDescription className="text-amber-700">
-                    Upload high-quality photos showcasing this antique piece. JPG, PNG, WEBP accepted. Max 5MB each.
+                    Upload high-quality photos showcasing this antique piece.
+                    JPG, PNG, WEBP accepted. Max 5MB each.
                   </FormDescription>
                   <FormControl>
                     <div className="filepond-container">
@@ -1094,7 +1174,8 @@ const NewProductPage = () => {
                         Feature this Piece
                       </FormLabel>
                       <FormDescription className="text-amber-700">
-                        Highlight this piece in featured collections and homepage
+                        Highlight this piece in featured collections and
+                        homepage
                       </FormDescription>
                     </div>
                     <FormControl>
@@ -1111,10 +1192,10 @@ const NewProductPage = () => {
 
           {/* Submission */}
           <div className="pt-4">
-            <Button 
-              type="submit" 
-              disabled={isSubmitting} 
-              className="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white py-3 text-lg font-semibold shadow-lg"
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-gradient-to-r from-stone-800 to-stone-900 hover:from-stone-700 hover:to-stone-800 text-white py-3 text-lg font-semibold shadow-lg"
             >
               {isSubmitting ? (
                 <>
@@ -1122,9 +1203,7 @@ const NewProductPage = () => {
                   Adding to Collection...
                 </>
               ) : (
-                <>
-                  Add to Antique Collection
-                </>
+                <>Add to Antique Collection</>
               )}
             </Button>
           </div>
@@ -1136,65 +1215,65 @@ const NewProductPage = () => {
           position: relative;
           z-index: 1;
         }
-        
+
         .filepond--root {
           font-family: inherit;
         }
-        
+
         .filepond--item {
           width: calc(50% - 0.5em);
           margin: 0.25em;
         }
-        
+
         @media (min-width: 768px) {
           .filepond--item {
             width: calc(33.333% - 0.5em);
           }
         }
-        
+
         @media (min-width: 1024px) {
           .filepond--item {
             width: calc(25% - 0.5em);
           }
         }
-        
+
         .filepond--item-panel {
           background-color: rgba(251, 191, 36, 0.1);
           border: 2px dashed #d97706;
           border-radius: 0.5rem;
         }
-        
+
         .filepond--image-preview {
           border-radius: 0.375rem;
         }
-        
+
         .filepond--image-preview-wrapper {
           border-radius: 0.375rem;
         }
-        
+
         .filepond--drop-label {
           color: #92400e;
         }
-        
+
         .filepond--label-action {
           color: #d97706;
         }
-        
+
         .filepond--panel-root {
           border-radius: 0.5rem;
           background-color: rgba(255, 255, 255, 0.8);
         }
-        
+
         .filepond--file-action-button {
           border-radius: 50%;
           background-color: rgba(220, 38, 38, 0.9);
           color: white;
         }
-        
+
         .filepond--file-action-button:hover {
           background-color: rgba(220, 38, 38, 1);
         }
-        
+
         .filepond--progress-indicator {
           color: #d97706;
         }

@@ -95,7 +95,14 @@ const productSchema = new Schema<IProduct>(
       unique: true,
       trim: true,
       uppercase: true,
-      // Removed index: true - using schema.index() instead
+      // Remove: index: true (since you have schema.index() below)
+    },
+    slug: {
+      type: String,
+      unique: true,
+      lowercase: true,
+      trim: true,
+      // Remove: index: true (since you have schema.index() below)
     },
     images: [
       {
@@ -214,13 +221,6 @@ const productSchema = new Schema<IProduct>(
       type: Boolean,
       default: false,
     },
-    slug: {
-      type: String,
-      unique: true,
-      lowercase: true,
-      trim: true,
-      // Removed index: true - using schema.index() instead
-    },
   },
   {
     timestamps: true,
@@ -250,16 +250,9 @@ productSchema.pre("save", function (next) {
   next();
 });
 
-// Indexes for better performance (removed duplicates)
-productSchema.index({ category: 1, isActive: 1 });
 productSchema.index({ slug: 1 }, { unique: true });
 productSchema.index({ sku: 1 }, { unique: true });
-productSchema.index({ isFeatured: 1, isActive: 1 });
-productSchema.index({ price: 1 });
-productSchema.index({ tags: 1 });
-productSchema.index({ material: 1 });
-productSchema.index({ condition: 1 });
-productSchema.index({ "authenticity.certified": 1 });
+
 
 const Product =
   mongoose.models.Product ||

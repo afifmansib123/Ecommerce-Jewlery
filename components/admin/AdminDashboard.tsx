@@ -1,11 +1,17 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import AdminLayout from "./AdminLayout"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import React, { useState, useEffect } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import AdminLayout from "./AdminLayout";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   Package,
   FolderOpen,
@@ -17,9 +23,9 @@ import {
   MapPin,
   Plus,
   ArrowRight,
-  Eye
-} from 'lucide-react';
-import Link from 'next/link';
+  Eye,
+} from "lucide-react";
+import Link from "next/link";
 
 interface DashboardStats {
   overview: {
@@ -71,15 +77,15 @@ const AdminDashboard: React.FC = () => {
   const fetchDashboardStats = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/dashboard/stats');
+      const response = await fetch("/api/dashboard/stats");
       if (response.ok) {
         const data = await response.json();
         setStats(data);
       } else {
-        console.error('Failed to fetch dashboard stats');
+        console.error("Failed to fetch dashboard stats");
       }
     } catch (error) {
-      console.error('Error fetching dashboard stats:', error);
+      console.error("Error fetching dashboard stats:", error);
     } finally {
       setLoading(false);
     }
@@ -87,34 +93,46 @@ const AdminDashboard: React.FC = () => {
 
   const quickActions = [
     {
-      title: t('admin.quickActions.newTour'),
-      description: t('admin.quickActions.newTourDesc'),
-      href: '/admin/tours/new',
+      title: t("admin.quickActions.newTour"),
+      description: t("admin.quickActions.newTourDesc"),
+      href: "/admin/products/new",
       icon: Package,
-      color: 'bg-blue-500 hover:bg-blue-600',
+      color: "bg-blue-500 hover:bg-blue-600",
     },
     {
-      title: t('admin.quickActions.newCategory'),
-      description: t('admin.quickActions.newCategoryDesc'),
-      href: '/admin/categories',
+      title: t("admin.quickActions.newCategory"),
+      description: t("admin.quickActions.newCategoryDesc"),
+      href: "/admin/categories",
       icon: FolderOpen,
-      color: 'bg-green-500 hover:bg-green-600',
+      color: "bg-green-500 hover:bg-green-600",
     },
     {
-      title: t('admin.quickActions.viewBookings'),
-      description: t('admin.quickActions.viewBookingsDesc'),
-      href: '/admin/tours',
+      title: t("admin.quickActions.viewBookings"),
+      description: t("admin.quickActions.viewBookingsDesc"),
+      href: "/admin/products",
       icon: Calendar,
-      color: 'bg-purple-500 hover:bg-purple-600',
+      color: "bg-purple-500 hover:bg-purple-600",
     },
-
+    {
+      title: t("admin.quickActions.viewAllProducts"),
+      description: t("admin.quickActions.viewAllProductsDesc"),
+      href: "/admin/products",
+      icon: Eye,
+      color: "bg-orange-500 hover:bg-orange-600",
+    },
+    {
+      title: t("admin.quickActions.viewAllCategories"),
+      description: t("admin.quickActions.viewAllCategoriesDesc"),
+      href: "/admin/categories",
+      icon: Users,
+      color: "bg-teal-500 hover:bg-teal-600",
+    },
   ];
-
   if (loading) {
     return (
       <AdminLayout
-        title={t('admin.dashboard.title')}
-        subtitle={t('admin.dashboard.subtitle')}
+        title={t("admin.dashboard.title")}
+        subtitle={t("admin.dashboard.subtitle")}
       >
         <div className="flex items-center justify-center h-64">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
@@ -125,14 +143,14 @@ const AdminDashboard: React.FC = () => {
 
   return (
     <AdminLayout
-      title={t('admin.dashboard.title')}
-      subtitle={t('admin.dashboard.subtitle')}
+      title={t("admin.dashboard.title")}
+      subtitle={t("admin.dashboard.subtitle")}
     >
       <div className="space-y-6">
         {/* Quick Actions */}
         <div>
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            {t('admin.dashboard.quickActions')}
+            {t("admin.dashboard.quickActions")}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {quickActions.map((action) => {
@@ -168,13 +186,13 @@ const AdminDashboard: React.FC = () => {
           <>
             <div>
               <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                {t('admin.dashboard.overview')}
+                {t("admin.dashboard.overview")}
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <Card>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-medium text-gray-600">
-                      {t('admin.dashboard.totalCategories')}
+                      {t("admin.dashboard.totalCategories")}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -185,7 +203,8 @@ const AdminDashboard: React.FC = () => {
                       <FolderOpen className="h-8 w-8 text-green-600" />
                     </div>
                     <p className="text-sm text-gray-600 mt-1">
-                      {stats.overview.activeCategories} {t('admin.dashboard.active')}
+                      {stats.overview.activeCategories}{" "}
+                      {t("admin.dashboard.active")}
                     </p>
                   </CardContent>
                 </Card>
@@ -193,7 +212,7 @@ const AdminDashboard: React.FC = () => {
                 <Card>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-medium text-gray-600">
-                      {t('admin.dashboard.totalTours')}
+                      {t("admin.dashboard.totalTours")}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -204,7 +223,8 @@ const AdminDashboard: React.FC = () => {
                       <Package className="h-8 w-8 text-blue-600" />
                     </div>
                     <p className="text-sm text-gray-600 mt-1">
-                      {stats.overview.activeTourPackages} {t('admin.dashboard.active')}
+                      {stats.overview.activeTourPackages}{" "}
+                      {t("admin.dashboard.active")}
                     </p>
                   </CardContent>
                 </Card>
@@ -212,7 +232,7 @@ const AdminDashboard: React.FC = () => {
                 <Card>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-medium text-gray-600">
-                      {t('admin.dashboard.featuredTours')}
+                      {t("admin.dashboard.featuredTours")}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -228,7 +248,7 @@ const AdminDashboard: React.FC = () => {
                 <Card>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-medium text-gray-600">
-                      {t('admin.dashboard.averagePrice')}
+                      {t("admin.dashboard.averagePrice")}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -239,7 +259,8 @@ const AdminDashboard: React.FC = () => {
                       <BarChart3 className="h-8 w-8 text-purple-600" />
                     </div>
                     <p className="text-sm text-gray-600 mt-1">
-                      ¥{stats.priceStatistics.minimumPrice.toLocaleString()} - ¥{stats.priceStatistics.maximumPrice.toLocaleString()}
+                      ¥{stats.priceStatistics.minimumPrice.toLocaleString()} - ¥
+                      {stats.priceStatistics.maximumPrice.toLocaleString()}
                     </p>
                   </CardContent>
                 </Card>
@@ -253,36 +274,46 @@ const AdminDashboard: React.FC = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <FolderOpen className="h-5 w-5 mr-2 text-green-600" />
-                    {t('admin.dashboard.toursByCategory')}
+                    {t("admin.dashboard.toursByCategory")}
                   </CardTitle>
                   <CardDescription>
-                    {t('admin.dashboard.toursByCategoryDesc')}
+                    {t("admin.dashboard.toursByCategoryDesc")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {stats.tourPackagesByCategory.slice(0, 5).map((category) => (
-                      <div key={category.categoryId} className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between mb-1">
-                            <span className="text-sm font-medium text-gray-900">
-                              {category.categoryName}
-                            </span>
-                            <span className="text-sm text-gray-600">
-                              {category.count}
-                            </span>
+                    {stats.tourPackagesByCategory
+                      .slice(0, 5)
+                      .map((category) => (
+                        <div
+                          key={category.categoryId}
+                          className="flex items-center justify-between"
+                        >
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="text-sm font-medium text-gray-900">
+                                {category.categoryName}
+                              </span>
+                              <span className="text-sm text-gray-600">
+                                {category.count}
+                              </span>
+                            </div>
+                            <div className="w-full bg-gray-200 rounded-full h-2">
+                              <div
+                                className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                                style={{
+                                  width: `${Math.min(
+                                    (category.count /
+                                      stats.overview.totalTourPackages) *
+                                      100,
+                                    100
+                                  )}%`,
+                                }}
+                              ></div>
+                            </div>
                           </div>
-                          <div className="w-full bg-gray-200 rounded-full h-2">
-  <div 
-    className="bg-blue-600 h-2 rounded-full transition-all duration-300" 
-    style={{
-      width: `${Math.min((category.count / stats.overview.totalTourPackages) * 100, 100)}%`
-    }}
-  ></div>
-</div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
                   </div>
                 </CardContent>
               </Card>
@@ -292,22 +323,29 @@ const AdminDashboard: React.FC = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <TrendingUp className="h-5 w-5 mr-2 text-purple-600" />
-                    {t('admin.dashboard.toursByDifficulty')}
+                    {t("admin.dashboard.toursByDifficulty")}
                   </CardTitle>
                   <CardDescription>
-                    {t('admin.dashboard.toursByDifficultyDesc')}
+                    {t("admin.dashboard.toursByDifficultyDesc")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     {stats.tourPackagesByDifficulty.map((difficulty) => (
-                      <div key={difficulty.difficulty} className="flex items-center justify-between">
+                      <div
+                        key={difficulty.difficulty}
+                        className="flex items-center justify-between"
+                      >
                         <div className="flex items-center space-x-3">
-                          <Badge 
+                          <Badge
                             variant={
-                              difficulty.difficulty === 'easy' ? 'secondary' :
-                              difficulty.difficulty === 'moderate' ? 'default' :
-                              difficulty.difficulty === 'challenging' ? 'destructive' : 'outline'
+                              difficulty.difficulty === "easy"
+                                ? "secondary"
+                                : difficulty.difficulty === "moderate"
+                                ? "default"
+                                : difficulty.difficulty === "challenging"
+                                ? "destructive"
+                                : "outline"
                             }
                           >
                             {t(`admin.difficulty.${difficulty.difficulty}`)}
@@ -330,16 +368,16 @@ const AdminDashboard: React.FC = () => {
                   <div>
                     <CardTitle className="flex items-center">
                       <Package className="h-5 w-5 mr-2 text-blue-600" />
-                      {t('admin.dashboard.recentTours')}
+                      {t("admin.dashboard.recentTours")}
                     </CardTitle>
                     <CardDescription>
-                      {t('admin.dashboard.recentToursDesc')}
+                      {t("admin.dashboard.recentToursDesc")}
                     </CardDescription>
                   </div>
                   <Button asChild variant="outline" size="sm">
                     <Link href="/admin/tours">
                       <Eye className="h-4 w-4 mr-2" />
-                      {t('admin.dashboard.viewAll')}
+                      {t("admin.dashboard.viewAll")}
                     </Link>
                   </Button>
                 </div>
@@ -347,9 +385,14 @@ const AdminDashboard: React.FC = () => {
               <CardContent>
                 <div className="space-y-4">
                   {stats.recentTourPackages.map((tour) => (
-                    <div key={tour._id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                    <div
+                      key={tour._id}
+                      className="flex items-center justify-between p-4 border border-gray-200 rounded-lg"
+                    >
                       <div className="flex-1">
-                        <h4 className="font-medium text-gray-900">{tour.name}</h4>
+                        <h4 className="font-medium text-gray-900">
+                          {tour.name}
+                        </h4>
                         <div className="flex items-center space-x-4 mt-1">
                           <span className="text-sm text-gray-600 flex items-center">
                             <MapPin className="h-3 w-3 mr-1" />

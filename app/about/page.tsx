@@ -6,30 +6,30 @@ export default function AboutPage() {
   const { t } = useLanguage();
 
   const stats = [
-    { icon: Clock, label: 'Years of Expertise', value: '16+' },
-    { icon: Gem, label: 'Authenticated Pieces', value: '500+' },
-    { icon: Shield, label: 'Satisfied Collectors', value: '350+' },
-    { icon: Award, label: 'Authenticity Rate', value: '100%' }
+    { icon: Clock, label: t('about.stats.years'), value: '16+' },
+    { icon: Gem, label: t('about.stats.pieces'), value: '500+' },
+    { icon: Shield, label: t('about.stats.collectors'), value: '350+' },
+    { icon: Award, label: t('about.stats.authenticity'), value: '100%' }
   ];
 
   const team = [
     {
       name: 'Somchai Wangmanee',
-      role: 'Founder & Master Appraiser',
+      role: t('about.team.founder.role'),
       image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=300',
-      description: 'Third-generation jewelry expert with 25+ years specializing in Victorian and Art Deco pieces'
+      description: t('about.team.founder.description')
     },
     {
       name: 'Dr. Siriporn Chen',
-      role: 'Senior Authenticator',
+      role: t('about.team.authenticator.role'),
       image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=300',
-      description: 'Ph.D. in Art History, specialist in Asian antiques and provenance documentation'
+      description: t('about.team.authenticator.description')
     },
     {
       name: 'James Harrison',
-      role: 'European Antiques Curator',
+      role: t('about.team.curator.role'),
       image: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=300',
-      description: 'Former Sotheby\'s specialist with expertise in European estate jewelry'
+      description: t('about.team.curator.description')
     }
   ];
 
@@ -50,14 +50,14 @@ export default function AboutPage() {
             <div className="mb-6">
               <div className="w-16 h-0.5 bg-stone-200 mx-auto mb-4"></div>
               <p className="text-stone-200 tracking-[0.2em] text-sm font-light uppercase">
-                Established 2008 • Bangkok, Thailand
+                {t('about.hero.established')}
               </p>
             </div>
             <h1 className="text-5xl md:text-6xl font-light mb-6">
-              <span className="font-serif">Wangmanee</span> Gallery
+              <span className="font-serif">{t('about.hero.gallery')}</span> {t('about.hero.title')}
             </h1>
             <p className="text-xl md:text-2xl font-light leading-relaxed max-w-3xl mx-auto">
-              Curating exceptional antique jewelry with authenticated provenance for discerning collectors worldwide
+              {t('about.hero.subtitle')}
             </p>
           </div>
         </div>
@@ -91,42 +91,30 @@ export default function AboutPage() {
               <div className="mb-8">
                 <div className="w-16 h-0.5 bg-stone-600 mb-4"></div>
                 <p className="text-stone-600 tracking-[0.2em] text-sm font-medium uppercase">
-                  Our Heritage
+                  {t('about.heritage.label')}
                 </p>
               </div>
               <h2 className="text-4xl md:text-5xl font-light text-stone-900 mb-8 leading-tight">
-                A Legacy of <span className="font-serif italic">Authenticity</span>
+                {t('about.heritage.title')} <span className="font-serif italic">{t('about.heritage.authenticity')}</span>
               </h2>
               <div className="space-y-6 text-stone-700 leading-relaxed">
-                <p>
-                  Founded in 2008 by master jeweler Somchai Wangmanee, our gallery represents three generations 
-                  of expertise in fine antique jewelry. Located in the heart of Bangkok's historic district, 
-                  we have built our reputation on meticulous authentication and uncompromising quality.
-                </p>
-                <p>
-                  What began as a passion for preserving historical craftsmanship has evolved into Southeast Asia's 
-                  most trusted source for authenticated antique jewelry. Each piece in our collection undergoes 
-                  rigorous verification, complete with detailed provenance documentation.
-                </p>
-                <p>
-                  Today, collectors from around the world trust Wangmanee Gallery to provide not just exquisite 
-                  jewelry, but the stories and heritage that make each piece truly exceptional. Our commitment 
-                  to authenticity remains unwavering after more than a decade of service.
-                </p>
+                <p>{t('about.heritage.paragraph1')}</p>
+                <p>{t('about.heritage.paragraph2')}</p>
+                <p>{t('about.heritage.paragraph3')}</p>
               </div>
             </div>
             <div className="relative">
               <div className="relative overflow-hidden rounded-sm shadow-2xl">
                 <img
                   src="https://images.pexels.com/photos/1454171/pexels-photo-1454171.jpeg?auto=compress&cs=tinysrgb&w=600"
-                  alt="Antique jewelry workshop"
+                  alt={t('about.heritage.imageAlt')}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-900/20 to-transparent"></div>
               </div>
               <div className="absolute -bottom-8 -left-8 bg-white p-6 rounded-sm shadow-xl border border-stone-100">
-                <div className="text-2xl font-light text-stone-900 mb-1">Est. 2008</div>
-                <div className="text-sm text-stone-600">Bangkok, Thailand</div>
+                <div className="text-2xl font-light text-stone-900 mb-1">{t('about.heritage.established')}</div>
+                <div className="text-sm text-stone-600">{t('about.heritage.location')}</div>
               </div>
             </div>
           </div>
@@ -140,14 +128,14 @@ export default function AboutPage() {
             <div className="mb-8">
               <div className="w-16 h-0.5 bg-stone-600 mx-auto mb-4"></div>
               <p className="text-stone-600 tracking-[0.2em] text-sm font-medium uppercase">
-                Our Expertise
+                {t('about.expertise.label')}
               </p>
             </div>
             <h2 className="text-4xl md:text-5xl font-light text-stone-900 mb-6">
-              Uncompromising <span className="font-serif italic">Standards</span>
+              {t('about.expertise.title')} <span className="font-serif italic">{t('about.expertise.standards')}</span>
             </h2>
             <p className="text-xl text-stone-700 max-w-2xl mx-auto font-light">
-              Every piece meets our exacting standards for authenticity, condition, and historical significance
+              {t('about.expertise.subtitle')}
             </p>
           </div>
           
@@ -156,30 +144,27 @@ export default function AboutPage() {
               <div className="w-20 h-20 bg-stone-900 rounded-sm mx-auto mb-6 flex items-center justify-center group-hover:bg-stone-800 transition-colors duration-200">
                 <Shield className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-xl font-medium text-stone-900 mb-4">Expert Authentication</h3>
+              <h3 className="text-xl font-medium text-stone-900 mb-4">{t('about.expertise.authentication.title')}</h3>
               <p className="text-stone-600 leading-relaxed">
-                Our certified gemologists and historians verify every piece using advanced techniques 
-                and decades of expertise to ensure absolute authenticity.
+                {t('about.expertise.authentication.description')}
               </p>
             </div>
             <div className="text-center group">
               <div className="w-20 h-20 bg-stone-900 rounded-sm mx-auto mb-6 flex items-center justify-center group-hover:bg-stone-800 transition-colors duration-200">
                 <Gem className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-xl font-medium text-stone-900 mb-4">Curated Collection</h3>
+              <h3 className="text-xl font-medium text-stone-900 mb-4">{t('about.expertise.collection.title')}</h3>
               <p className="text-stone-600 leading-relaxed">
-                Each piece is carefully selected for its historical significance, craftsmanship quality, 
-                and provenance documentation before joining our collection.
+                {t('about.expertise.collection.description')}
               </p>
             </div>
             <div className="text-center group">
               <div className="w-20 h-20 bg-stone-900 rounded-sm mx-auto mb-6 flex items-center justify-center group-hover:bg-stone-800 transition-colors duration-200">
                 <Award className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-xl font-medium text-stone-900 mb-4">Lifetime Guarantee</h3>
+              <h3 className="text-xl font-medium text-stone-900 mb-4">{t('about.expertise.guarantee.title')}</h3>
               <p className="text-stone-600 leading-relaxed">
-                We stand behind every piece with comprehensive documentation and a lifetime 
-                authenticity guarantee for complete peace of mind.
+                {t('about.expertise.guarantee.description')}
               </p>
             </div>
           </div>
@@ -193,14 +178,14 @@ export default function AboutPage() {
             <div className="mb-8">
               <div className="w-16 h-0.5 bg-stone-600 mx-auto mb-4"></div>
               <p className="text-stone-600 tracking-[0.2em] text-sm font-medium uppercase">
-                Meet Our Experts
+                {t('about.team.label')}
               </p>
             </div>
             <h2 className="text-4xl md:text-5xl font-light text-stone-900 mb-6">
-              The <span className="font-serif italic">Specialists</span> Behind Your Collection
+              {t('about.team.title')} <span className="font-serif italic">{t('about.team.specialists')}</span> {t('about.team.behind')}
             </h2>
             <p className="text-xl text-stone-700 max-w-2xl mx-auto font-light">
-              Our team combines generations of experience with modern authentication techniques
+              {t('about.team.subtitle')}
             </p>
           </div>
           
@@ -230,35 +215,35 @@ export default function AboutPage() {
           <div className="mb-8">
             <div className="w-16 h-0.5 bg-stone-300 mx-auto mb-4"></div>
             <p className="text-stone-200 tracking-[0.2em] text-sm font-light uppercase">
-              Visit Our Gallery
+              {t('about.visit.label')}
             </p>
           </div>
           <h2 className="text-4xl md:text-5xl font-light mb-6">
-            Ready to Discover Your <span className="font-serif italic">Perfect Piece</span>?
+            {t('about.visit.title')} <span className="font-serif italic">{t('about.visit.perfect')}</span>?
           </h2>
           <p className="text-xl mb-8 font-light text-stone-100 leading-relaxed">
-            Experience our collection in person or browse our authenticated pieces online with detailed provenance
+            {t('about.visit.subtitle')}
           </p>
           <div className="space-y-4 sm:space-y-0 sm:space-x-6 sm:flex sm:justify-center">
             <a
               href="/tours"
               className="inline-block bg-white text-stone-900 px-8 py-4 font-medium hover:bg-stone-50 transition-colors duration-200 rounded-sm"
             >
-              Browse Collection
+              {t('about.visit.browse')}
             </a>
             <a
               href="/contact"
               className="inline-block border border-white text-white px-8 py-4 font-medium hover:bg-white hover:text-stone-900 transition-colors duration-200 rounded-sm"
             >
-              Visit Gallery
+              {t('about.visit.visit')}
             </a>
           </div>
           
           <div className="mt-12 pt-8 border-t border-stone-700">
             <div className="text-stone-300 text-sm space-y-1">
-              <p>Wangmanee Jewelry Store, Bangkok, Thailand</p>
-              <p>Open Daily: 10:00 AM - 8:00 PM</p>
-              <p>Private appointments available</p>
+              <p>{t('about.visit.address')}</p>
+              <p>{t('about.visit.hours')}</p>
+              <p>{t('about.visit.appointments')}</p>
             </div>
           </div>
         </div>
