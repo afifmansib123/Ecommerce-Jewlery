@@ -430,11 +430,11 @@ const NewProductPage = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-amber-900">
-                        SKU (Optional)
+                        SKU (Manditory)
                       </FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Auto-generated if empty"
+                          placeholder="Put an Unique Id here"
                           {...field}
                           className="border-amber-300 focus:border-amber-500"
                         />
